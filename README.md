@@ -1,22 +1,21 @@
 ```text
 $ tw -h
-textwrap 0.1.0
+Command line interface for textwrap
 
-USAGE:
-    tw [OPTIONS] <INPUT_FILES>...
+Usage: tw [OPTIONS] <INPUT_FILES>...
 
-ARGS:
-    <INPUT_FILES>...    Input file(s); use `-` to read from standard input
+Arguments:
+  <INPUT_FILES>...  Input file(s); use `-` to read from standard input
 
-OPTIONS:
-    -w <WIDTH>        Width [default: 80]
-    -e <EOL>          End of line string [default: \]
-    -h, --help        Print help information
-    -V, --version     Print version information
+Options:
+  -w <WIDTH>      Width [default: 80]
+  -e <EOL>        End of line string [default: \]
+  -h, --help      Print help
+  -V, --version   Print version
 ```
 
 ```text
-$ echo abc def ghi jkl mno pqr stu vwx yz |tw -w 13
+$ echo abc def ghi jkl mno pqr stu vwx yz |tw -w 13 -
 abc def ghi\
 jkl mno pqr\
 stu vwx yz

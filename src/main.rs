@@ -1,4 +1,4 @@
-use clap::{AppSettings, Parser};
+use clap::Parser;
 use std::fs::File;
 use std::io::{stdin, BufRead, BufReader, Read};
 use std::path::PathBuf;
@@ -6,7 +6,6 @@ use std::path::PathBuf;
 /// Command line interface for textwrap; https://crates.io/crates/textwrap-cli
 #[derive(Parser)]
 #[clap(about, version, name = "tw")]
-#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 struct Args {
     /// Width
     #[clap(short, default_value = "80")]

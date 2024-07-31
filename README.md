@@ -15,6 +15,11 @@ Options:
 ```
 
 ```text
+$ tw -V
+tw 0.2.0
+```
+
+```text
 $ echo abc def ghi jkl mno pqr stu vwx yz |tw -w 13 -
 abc def ghi\
 jkl mno pqr\

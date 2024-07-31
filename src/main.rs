@@ -3,9 +3,9 @@ use std::fs::File;
 use std::io::{stdin, BufRead, BufReader, Read};
 use std::path::PathBuf;
 
-/// Command line interface for textwrap; https://crates.io/crates/textwrap-cli
+/// Command line interface for textwrap; <https://crates.io/crates/textwrap-cli>
 #[derive(Parser)]
-#[clap(about, version, name = "tw")]
+#[command(about, version, name = "tw", max_term_width = 80)]
 struct Args {
     /// Width
     #[clap(short, default_value = "80")]
@@ -68,17 +68,12 @@ where
     R: Read,
 {
     let mut line = String::new();
-    loop {
-        match r.read_line(&mut line) {
-            Ok(n) => {
-                if n == 0 {
-                    break;
-                } else {
-                    process_line(&line, width, &eol);
-                    line = String::new();
-                }
-            }
-            Err(_e) => break,
+    while let Ok(n) = r.read_line(&mut line) {
+        if n == 0 {
+            break;
+        } else {
+            process_line(&line, width, eol);
+            line = String::new();
         }
     }
 }

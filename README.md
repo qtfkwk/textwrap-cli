@@ -16,7 +16,7 @@ Options:
 
 ```text
 $ tw -V
-tw 0.2.2
+tw 0.2.3
 ```
 
 ```text

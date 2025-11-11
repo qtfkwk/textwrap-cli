@@ -1,13 +1,15 @@
 [package]
 name = "textwrap-cli"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2024"
 description = "Command line interface for textwrap"
 license = "MIT"
 repository = "https://github.com/qtfkwk/textwrap-cli"
 
 [dependencies]
-clap = { version = "4.5.50", features = ["derive", "wrap_help"] }
+anyhow = "1.0.100"
+clap = { version = "4.5.51", features = ["derive", "wrap_help"] }
+clap-cargo = "0.18.3"
 textwrap = "0.16.2"
 
 [[bin]]
@@ -15,4 +17,4 @@ name = "tw"
 path = "src/main.rs"
 
 [dev-dependencies]
-assert_cmd = "2.0.17"
+assert_cmd = "2.1.1"

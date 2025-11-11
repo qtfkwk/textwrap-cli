@@ -8,15 +8,15 @@ Arguments:
   <INPUT_FILES>...  Input file(s); use `-` to read from standard input
 
 Options:
-  -w <WIDTH>      Width [default: 80]
-  -e <EOL>        End of line string [default: \]
-  -h, --help      Print help
-  -V, --version   Print version
+  -w <WIDTH>     Width [default: 80]
+  -e <EOL>       End of line string [default: \]
+  -h, --help     Print help
+  -V, --version  Print version
 ```
 
 ```text
 $ tw -V
-tw 0.3.1
+tw 0.4.0
 ```
 
 ```text

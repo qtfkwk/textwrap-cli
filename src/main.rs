@@ -1,11 +1,17 @@
-use clap::Parser;
-use std::fs::File;
-use std::io::{stdin, BufRead, BufReader, Read};
-use std::path::PathBuf;
+use {
+    anyhow::Result,
+    clap::Parser,
+    clap_cargo::style::CLAP_STYLING,
+    std::{
+        fs::File,
+        io::{BufRead, BufReader, Read, stdin},
+        path::PathBuf,
+    },
+};
 
 /// Command line interface for textwrap; <https://crates.io/crates/textwrap-cli>
 #[derive(Parser)]
-#[command(about, version, name = "tw", max_term_width = 80)]
+#[command(about, version, name = "tw", max_term_width = 80, styles = CLAP_STYLING)]
 struct Args {
     /// Width
     #[clap(short, default_value = "80")]
@@ -21,7 +27,7 @@ struct Args {
 }
 
 /// Command line interface
-fn main() -> Result<(), String> {
+fn main() -> Result<()> {
     let args = Args::parse();
 
     for input_file in args.input_files {
@@ -30,7 +36,7 @@ fn main() -> Result<(), String> {
             let mut r = BufReader::new(f);
             process_reader(&mut r, args.width, &args.eol);
         } else {
-            let f = File::open(&input_file).unwrap();
+            let f = File::open(&input_file)?;
             let mut r = BufReader::new(f);
             process_reader(&mut r, args.width, &args.eol);
         }
@@ -71,9 +77,9 @@ where
     while let Ok(n) = r.read_line(&mut line) {
         if n == 0 {
             break;
-        } else {
-            process_line(&line, width, eol);
-            line = String::new();
         }
+
+        process_line(&line, width, eol);
+        line = String::new();
     }
 }

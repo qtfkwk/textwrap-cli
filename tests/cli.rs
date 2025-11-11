@@ -1,4 +1,4 @@
-use assert_cmd::Command;
+use assert_cmd::{Command, cargo};
 
 const ABC: &str = include_str!("abc.txt");
 const ABC_WANT: &str = "abcdefghijklm\\\nnopqrstuvwxyz";
@@ -19,15 +19,14 @@ nihil.";
 // Helper functions
 
 /// Retrieve the binary to test
-pub fn cmd(bin: &str) -> Command {
-    Command::cargo_bin(bin).unwrap()
+pub fn cmd() -> Command {
+    Command::new(cargo::cargo_bin!("tw"))
 }
 
 /// Print the command
-fn p(bin: &str, args: &[&str]) {
+fn p(args: &[&str]) {
     println!(
-        "{} {}",
-        bin,
+        "tw {}",
         args.iter()
             .map(|x| {
                 if x.contains(' ') {
@@ -55,9 +54,9 @@ fn fail(bin: &str, args: &[&str], code: i32, msg: &str) {
 */
 
 /// Run command that succeeds
-fn pass(bin: &str, args: &[&str], want: &str) {
-    p(bin, args);
-    cmd(bin)
+fn pass(args: &[&str], want: &str) {
+    p(args);
+    cmd()
         .args(args)
         .assert()
         .success()
@@ -69,21 +68,20 @@ fn pass(bin: &str, args: &[&str], want: &str) {
 #[test]
 fn version() {
     for i in ["-V", "--version"].iter() {
-        pass("tw", &[i], &format!("tw {}", env!("CARGO_PKG_VERSION")));
+        pass(&[i], &format!("tw {}", env!("CARGO_PKG_VERSION")));
     }
 }
 
 #[test]
 fn file_lorem() {
-    pass("tw", &["tests/lorem.txt"], LOREM_WANT);
+    pass(&["tests/lorem.txt"], LOREM_WANT);
 }
 
 #[test]
 fn stdin_lorem() {
-    let bin = "tw";
     let args = &["-"];
-    p(bin, args);
-    cmd(bin)
+    p(args);
+    cmd()
         .args(args)
         .write_stdin(LOREM)
         .assert()
@@ -93,15 +91,14 @@ fn stdin_lorem() {
 
 #[test]
 fn file_abc() {
-    pass("tw", &["-w", "13", "tests/abc.txt"], ABC_WANT);
+    pass(&["-w", "13", "tests/abc.txt"], ABC_WANT);
 }
 
 #[test]
 fn stdin_abc() {
-    let bin = "tw";
     let args = &["-w", "13", "-"];
-    p(bin, args);
-    cmd(bin)
+    p(args);
+    cmd()
         .args(args)
         .write_stdin(ABC)
         .assert()
@@ -111,19 +108,14 @@ fn stdin_abc() {
 
 #[test]
 fn file_abc_eol() {
-    pass(
-        "tw",
-        &["-w", "13", "-e", " \\", "tests/abc.txt"],
-        ABC_EOL_WANT,
-    );
+    pass(&["-w", "13", "-e", " \\", "tests/abc.txt"], ABC_EOL_WANT);
 }
 
 #[test]
 fn stdin_abc_eol() {
-    let bin = "tw";
     let args = &["-w", "13", "-e", " \\", "-"];
-    p(bin, args);
-    cmd(bin)
+    p(args);
+    cmd()
         .args(args)
         .write_stdin(ABC)
         .assert()
@@ -133,15 +125,14 @@ fn stdin_abc_eol() {
 
 #[test]
 fn file_abc_spaced() {
-    pass("tw", &["-w", "13", "tests/abc-spaced.txt"], ABC_SPACED_WANT);
+    pass(&["-w", "13", "tests/abc-spaced.txt"], ABC_SPACED_WANT);
 }
 
 #[test]
 fn stdin_abc_spaced() {
-    let bin = "tw";
     let args = &["-w", "13", "-"];
-    p(bin, args);
-    cmd(bin)
+    p(args);
+    cmd()
         .args(args)
         .write_stdin(ABC_SPACED)
         .assert()
@@ -152,7 +143,6 @@ fn stdin_abc_spaced() {
 #[test]
 fn file_abc_spaced_eol() {
     pass(
-        "tw",
         &["-w", "13", "-e", " \\", "tests/abc-spaced.txt"],
         ABC_SPACED_EOL_WANT,
     );
@@ -160,10 +150,9 @@ fn file_abc_spaced_eol() {
 
 #[test]
 fn stdin_abc_spaced_eol() {
-    let bin = "tw";
     let args = &["-w", "13", "-e", " \\", "-"];
-    p(bin, args);
-    cmd(bin)
+    p(args);
+    cmd()
         .args(args)
         .write_stdin(ABC_SPACED)
         .assert()

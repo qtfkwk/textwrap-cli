@@ -11,6 +11,7 @@
     * 0.3.1 (2025-10-27): Update dependencies
 * 0.4.0 (2025-11-11): Update dependencies; add [`clap-cargo`] `CLAP_STYLING`; use [`anyhow`]; clippy fixes; replace `assert_cmd::Command::cargo_bin` with `cargo::cargo_bin!`
     * 0.4.1 (2025-11-13): Update dependencies; clippy fixes (none)
+    * 0.4.2 (2026-03-03): Update dependencies
 
 [`anyhow`]: https://crates.io/crates/anyhow
 [`clap-cargo`]: https://crates.io/crates/clap-cargo
